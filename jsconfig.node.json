@@ -1,0 +1,11 @@
+{
+  "extends": "./jsconfig.json",
+  "compilerOptions": {
+    "module": "CommonJS", // Node uses CommonJS by default (unless you're using ESM)
+    "target": "ES2020", // Reasonable modern Node target
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true,
+    "checkJs": true // Optional: enable JS type checking
+  },
+  "include": ["scripts", "server", "config"]
+}

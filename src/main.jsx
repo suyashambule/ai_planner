@@ -6,6 +6,12 @@ import Createtrip from "./create/Createtrip.jsx";
 import "./index.css";
 import Header from "./components/custom/Header.jsx";
 import { Toaster } from "sonner";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { ClerkProvider } from "@clerk/clerk-react";
+import Viewtrip from "./view-trip/[tripid]/index.jsx";
+
+// Import your Clerk publishable key
+const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 const router = createBrowserRouter([
   {
@@ -13,7 +19,6 @@ const router = createBrowserRouter([
     element: (
       <>
         <Header />
-
         <App />
       </>
     ),
@@ -27,11 +32,26 @@ const router = createBrowserRouter([
       </>
     ),
   },
+  {
+    path: "/view-trip/:tripId",
+    element: (
+      <>
+        <Header />
+        <Viewtrip />
+      </>
+    ),
+  },
 ]);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <Toaster />
-    <RouterProvider router={router} />
+    <ClerkProvider publishableKey={clerkPubKey}>
+      <GoogleOAuthProvider
+        clientId={import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID}
+      >
+        <Toaster richColors position="top-center" />
+        <RouterProvider router={router} />
+      </GoogleOAuthProvider>
+    </ClerkProvider>
   </StrictMode>
 );
